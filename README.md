@@ -79,3 +79,17 @@ Métodos sobreescritos en el MainActivity que llaman al Controlador.
         else
             Log.d(TAG, "CANNOT UPDATE THIS CLIENT")
     }`
+
+## RAMA LAMBDAS - SIN INTERFAZ
+<br>
+Main Activity con lambdas 
+
+![](doc/captura_5_MainActivity lambdas_1.png)
+
+Main Activity con los métodos de las lambdas implementados
+
+![](doc/captura_6_MainActivityLambdas_2.png)
+
+LogCat funcionando con Lambdas
+
+![](doc/captura_7_logCatConLambdas.png)
