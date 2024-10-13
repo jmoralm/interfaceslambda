@@ -26,7 +26,8 @@ LogCat con trazas al hacer click en los iconos de la App
 <br>
 Código del metodo start() en el MainActivity:
 <br>
-`    private fun start() {
+        
+    `private fun start() {
 
         myButtonAdd = findViewById(R.id.imageView_myButtonAdd)
         myButtonDel = findViewById(R.id.imageView_myButtonDel)
@@ -53,24 +54,25 @@ Código del metodo start() en el MainActivity:
 <br>
 Métodos sobreescritos en el MainActivity que llaman al Controlador.
 <br>
-`    override fun clientAdd(id: Int, name: String, lastName: String, phone: String) {
+
+    `override fun clientAdd(id: Int, name: String, lastName: String, phone: String) {
         val newClient = Client(id, name, lastName, phone)
         controller.clientAddController(newClient)
         val msg = "Client with $id - Correctly added"
 
         Log.d(TAG, msg)
 
-    }
+    }`
 
-    override fun clientDel(id: Int) {
+    `override fun clientDel(id: Int) {
         val delete = controller.clientDelController(id)
         if(delete)
             Log.d(TAG, "Client with $id -> DELETED")
         else
             Log.d(TAG, "Client with id $id NOT FOUND $id par")
-    }
+    }`
 
-    override fun clientUpdate(id: Int, name: String, lastName: String, phone: String) {
+    `override fun clientUpdate(id: Int, name: String, lastName: String, phone: String) {
         val update = controller.clientEditController(id, name, lastName, phone)
         if(update)
             Log.d(TAG, "Client $id, $name, $lastName, $phone -> UPDATED")
