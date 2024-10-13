@@ -7,9 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.interfaceslambda.R
 import com.example.interfaceslambda.logic.Client
 import com.example.interfaceslambda.logic.Controller
-import com.example.interfaceslambda.logic.intefaces.OperationsInterface
 
-class MainActivity : AppCompatActivity(), OperationsInterface {
+class MainActivity : AppCompatActivity(){
 
     private lateinit var myButtonAdd: ImageView
     private lateinit var myButtonUpdate: ImageView
@@ -37,8 +36,17 @@ class MainActivity : AppCompatActivity(), OperationsInterface {
         myButtonDel = findViewById(R.id.imageView_myButtonDel)
         myButtonUpdate = findViewById(R.id.imageView_myButtonEdit)
 
-        myDialog = Dialog(controller)
-        myDialog.setListener(this)
+        myDialog = Dialog(controller,
+
+            { id, name, lastName, phone ->
+                clientAdd(id, name, lastName, phone) },
+
+            { id, name, lastName, phone ->
+                clientUpdate(id, name, lastName, phone)
+            },
+
+            { id ->
+                clientDel(id) })
 
         myButtonAdd.setOnClickListener {
             //
@@ -54,32 +62,29 @@ class MainActivity : AppCompatActivity(), OperationsInterface {
         }
     }
 
-    companion object {
-        const val TAG = "----SALIDA----"
+    private fun clientDel(id: Int){
+        val deleted = controller.clientDelController(id)
+        if(deleted)
+            Log.d(TAG, "CLIENT WITH ID $id DELETED")
+        else
+            Log.d(TAG, "CANNOT DELETE CLIENT WITH ID $id")
     }
 
-    override fun clientAdd(id: Int, name: String, lastName: String, phone: String) {
+    private fun clientUpdate(id: Int, name: String, lastName: String, phone: String) {
+        val update = controller.clientEditController(id, name, lastName, phone)
+        if (update)
+            Log.d(TAG, "CLIENT WITH ID $id, UPDATED")
+        else
+            Log.d(TAG, "CANNOT UPDATE CLIENT WITH ID $id")
+    }
+
+    private fun clientAdd(id: Int, name: String, lastName: String, phone: String) {
         val newClient = Client(id, name, lastName, phone)
         controller.clientAddController(newClient)
-        val msg = "Client with $id - Correctly added"
-
-        Log.d(TAG, msg)
-
+        Log.d(TAG, "Client with ID: $id -> ADDED")
     }
 
-    override fun clientDel(id: Int) {
-        val delete = controller.clientDelController(id)
-        if(delete)
-            Log.d(TAG, "Client with $id -> DELETED")
-        else
-            Log.d(TAG, "Client with id $id NOT FOUND $id par")
-    }
-
-    override fun clientUpdate(id: Int, name: String, lastName: String, phone: String) {
-        val update = controller.clientEditController(id, name, lastName, phone)
-        if(update)
-            Log.d(TAG, "Client $id, $name, $lastName, $phone -> UPDATED")
-        else
-            Log.d(TAG, "CANNOT UPDATE THIS CLIENT")
+    companion object {
+        const val TAG = "----SALIDA----"
     }
 }

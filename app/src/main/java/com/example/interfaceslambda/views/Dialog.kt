@@ -1,22 +1,18 @@
 package com.example.interfaceslambda.views
 
 import com.example.interfaceslambda.data.RepositoryClient
-import com.example.interfaceslambda.logic.Client
 import com.example.interfaceslambda.logic.Controller
-import com.example.interfaceslambda.logic.intefaces.OperationsInterface
 
-class Dialog (var controller : Controller) {
-
-    private var listener: OperationsInterface? = null
+class Dialog(
+    var controller: Controller,
+    var clientAdd: (Int, String, String, String) -> Unit,
+    var clientUpdate: (Int, String, String, String) -> Unit,
+    var clientDel: (Int) -> Unit
+) {
 
     private var action : Int = 0
 
-    fun setListener (_listener : OperationsInterface) {
-        listener = _listener
-    }
-
     fun show(typeAction : Int) {
-        listener?.let {
             val posibleName = "CAMBIADO"
             val randomId = controller.devIdRandom()
             when (typeAction) {
@@ -29,17 +25,16 @@ class Dialog (var controller : Controller) {
                         onDelete(randomId)
             }
         }
-    }
 
     private fun onDelete(id: Int) {
-        listener!!.clientDel(id)
+        clientDel(id)
     }
 
     private fun onEdit(id : Int, name : String, lastName: String, phone: String) {
-        listener!!.clientUpdate(id, name, lastName, phone)
+        clientUpdate(id, name, lastName, phone)
     }
 
     private fun onAccept() {
-        listener!!.clientAdd(RepositoryClient.primaryIncrement(), "NEW_CLIENT","NEW_LASTNAME", "NEW_PHONE")
+        clientAdd(RepositoryClient.primaryIncrement(), "NEW_CLIENT","NEW_LASTNAME", "NEW_PHONE")
     }
 }
