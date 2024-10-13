@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity(), OperationsInterface {
     private lateinit var myDialog: Dialog
     private val controller = Controller()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // enableEdgeToEdge() // barra superior transparente. App de borde a borde
@@ -29,6 +28,10 @@ class MainActivity : AppCompatActivity(), OperationsInterface {
 //        }
         Log.d(TAG, "¡¡Hola!!")
         start()
+    }
+
+    companion object {
+        const val TAG = "----SALIDA----"
     }
 
     private fun start() {
@@ -52,10 +55,6 @@ class MainActivity : AppCompatActivity(), OperationsInterface {
         myButtonUpdate.setOnClickListener {
             myDialog.show(1)
         }
-    }
-
-    companion object {
-        const val TAG = "----SALIDA----"
     }
 
     override fun clientAdd(id: Int, name: String, lastName: String, phone: String) {
